@@ -1,3 +1,23 @@
+const ScreenController = (() => {
+	const playerTurnDiv = document.querySelector("#turn");
+
+	const playerTurn = (activePlayerName) => {
+		playerTurnDiv.textContent = `It's ${activePlayerName}'s turn`;
+	};
+	const tieMessage = () => {
+		document.querySelector("#message").textContent = `It's a tie!`;
+	};
+
+	const winMessage = (activePlayerName) => {
+		document.querySelector("#message").textContent = `${activePlayerName} WINS!!!`;
+	};
+
+	return {
+		winMessage,
+		tieMessage,
+		playerTurn,
+	};
+})();
 
 const Gameboard = (() => {
 	let board = ["", "", "", "", "", "", "", "", ""];
