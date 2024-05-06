@@ -126,3 +126,7 @@ function checkWin(board) {
 	}
 }
 
+function checkTie(board) {
+	return board.every((cell) => cell !== "");
+}
+
