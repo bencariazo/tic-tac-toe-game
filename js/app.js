@@ -130,3 +130,13 @@ function checkTie(board) {
 	return board.every((cell) => cell !== "");
 }
 
+const restartBtn = document.querySelector("#btn-restart");
+
+restartBtn.addEventListener("click", () => {
+	gameController.restart();
+});
+const startBtn = document.querySelector("#btn-start");
+
+startBtn.addEventListener("click", () => {
+	gameController.start();
+});
