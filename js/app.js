@@ -43,3 +43,66 @@ const createPlayer = (name, mark) => {
 	};
 };
 
+const gameController = (() => {
+	const board = Gameboard;
+	let gameOver;
+	let activePlayer;
+
+	const start = () => {
+		players = [
+			createPlayer(document.querySelector("#playerOne").value, "X"),
+			createPlayer(document.querySelector("#playerTwo").value, "O"),
+		];
+		activePlayer = players[0];
+		gameOver = false;
+
+		Gameboard.render();
+		ScreenController.playerTurn(activePlayer.name);
+	};
+
+	const handleClick = (event) => {
+		if (gameOver) {
+			return;
+		}
+		let index = parseInt(event.target.id.split("-")[1]);
+
+		if (board.getGameboard()[index] !== "") {
+			return;
+		}
+		Gameboard.update(index, activePlayer.mark);
+		if (checkWin(board.getGameboard(), activePlayer.mark)) {
+			gameOver = true;
+			let message = activePlayer.name;
+			ScreenController.winMessage(message);
+		} else if (checkTie(board.getGameboard())) {
+			gameOver = true;
+			ScreenController.tieMessage();
+		}
+		switchPlayer();
+		ScreenController.playerTurn(activePlayer.name);
+	};
+
+	const switchPlayer = () => {
+		activePlayer = activePlayer === players[0] ? players[1] : players[0];
+	};
+
+	const getActivePlayer = () => activePlayer;
+
+	const restart = () => {
+		for (let i = 0; i < 9; i++) {
+			Gameboard.update(i, "");
+		}
+		Gameboard.render();
+		gameOver = false;
+		document.querySelector("#message").textContent = "";
+		document.querySelector("#turn").textContent = "";
+	};
+
+	return {
+		start,
+		getActivePlayer,
+		handleClick,
+		restart,
+	};
+})();
+
